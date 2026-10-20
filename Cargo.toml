@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 minifb = "0.28.0"
-rodio = "0.22.2"
+rodio = "0.23.0"
  
 [profile.release]
 opt-level = "z"

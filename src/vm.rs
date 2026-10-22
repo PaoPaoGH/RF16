@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use std::collections::{HashMap, VecDeque};
 
 pub const RAM_SIZE: usize = 65536;
@@ -17,7 +18,6 @@ pub enum Op {
     JumpIfNonZero(usize),
 
     Clear,
-
     Halt,
 }
 
@@ -39,6 +39,9 @@ pub struct VM {
 
     pub input_buffer: VecDeque<u8>,
     pub output_buffer: Vec<u8>,
+
+    #[cfg(feature = "bench")]
+    pub steps: u64,
 }
 
 impl VM {
@@ -53,6 +56,9 @@ impl VM {
             program,
             input_buffer: VecDeque::new(),
             output_buffer: Vec::new(),
+
+            #[cfg(feature = "bench")]
+            steps: 0,
         }
     }
 
@@ -144,6 +150,10 @@ impl VM {
             }
         }
 
+        #[cfg(feature = "bench")]
+        {
+            self.steps += 1;
+        }
         self.pc += 1;
         StepEvent::Continue
     }

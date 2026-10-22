@@ -4,12 +4,27 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-minifb = "0.28.0"
+minifb = "0.29.0"
 rodio = "0.23.0"
- 
+
 [profile.release]
 opt-level = "z"
 lto = "fat"
 panic = "abort"
 strip = true
 debug-assertions=false
+
+[lib]
+name = "rf16"
+path = "src/vm.rs"
+
+[features]
+bench = []
+
+[dev-dependencies]
+criterion = "0.8.2"
+
+[[bench]]
+name = "vm_bench"
+harness = false
+required-features = ["bench"]
